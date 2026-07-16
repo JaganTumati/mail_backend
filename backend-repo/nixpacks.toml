@@ -1,0 +1,9 @@
+# Tells Railway's Nixpacks builder how to build this Java/Maven app
+[phases.setup]
+nixPkgs = ["jdk17", "maven"]
+
+[phases.build]
+cmds = ["mvn clean package -DskipTests"]
+
+[start]
+cmd = "java -jar target/disposable-mail-1.0.0.jar"

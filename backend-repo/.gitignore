@@ -1,0 +1,16 @@
+target/
+*.class
+*.jar
+.idea/
+.vscode/
+*.iml
+.DS_Store
+.env
+.env.local
+*.env
+!.env.example
+application-dev.properties
+application-prod.properties
+!application-prod.properties.example
+*.log
+.m2/
