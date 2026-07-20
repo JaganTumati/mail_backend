@@ -43,16 +43,21 @@ public class InboundEmailController {
             @RequestParam(name = "body-plain", required = false) String bodyText,
             @RequestParam(name = "body-html", required = false) String bodyHtml) {
 
+        System.out.println("[Inbound webhook] recipient=" + recipient + " sender=" + sender + " subject=" + subject);
+
         if (recipient == null || sender == null) {
+            System.out.println("[Inbound webhook] Rejected: missing recipient or sender");
             return ResponseEntity.badRequest().body("Missing recipient or sender");
         }
 
         try {
             emailService.saveEmail(recipient, sender, subject, bodyText, bodyHtml);
+            System.out.println("[Inbound webhook] Saved email for " + recipient);
             return ResponseEntity.ok("received");
         } catch (RuntimeException e) {
             // No active inbox found for this address — not an error from the
             // relay provider's perspective, so return 200 to avoid retries.
+            System.out.println("[Inbound webhook] Ignored: " + e.getMessage());
             return ResponseEntity.ok("ignored: " + e.getMessage());
         }
     }
